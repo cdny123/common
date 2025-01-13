@@ -241,7 +241,7 @@ fi
 
 
 function Diy_update() {
-bash <(curl -fsSL https://raw.githubusercontent.com/cdny/common/main/custom/ubuntu.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/cdny123/common/main/custom/ubuntu.sh)
 if [[ $? -ne 0 ]];then
   TIME r "依赖安装失败，请检测网络后再次尝试!"
   exit 1
@@ -319,16 +319,16 @@ mv -f uniq.conf feeds.conf.default
 
 # 这里增加了源,要对应的删除/etc/opkg/distfeeds.conf插件源
 cat >>"feeds.conf.default" <<-EOF
-src-git danshui1 https://github.com/cdny/openwrt-package.git;${SOURCE}
+src-git danshui1 https://github.com/cdny123/openwrt-package.git;${SOURCE}
 src-git helloworld https://github.com/fw876/helloworld.git
 src-git passwall3 https://github.com/xiaorouji/openwrt-passwall-packages;main
 EOF
 ./scripts/feeds update -a
 
 if [[ -f "${HOME_PATH}/feeds/luci/modules/luci-mod-system/root/usr/share/luci/menu.d/luci-mod-system.json" ]]; then
-  echo "src-git danshui2 https://github.com/cdny/openwrt-package.git;Theme2" >> "feeds.conf.default"
+  echo "src-git danshui2 https://github.com/cdny123/openwrt-package.git;Theme2" >> "feeds.conf.default"
 else
-  echo "src-git danshui2 https://github.com/cdny/openwrt-package.git;Theme1" >> "feeds.conf.default"
+  echo "src-git danshui2 https://github.com/cdny123/openwrt-package.git;Theme1" >> "feeds.conf.default"
 fi
 z="*luci-theme-argon*,*luci-app-argon-config*,*luci-theme-Butterfly*,*luci-theme-netgear*,*luci-theme-atmaterial*, \
 luci-theme-rosy,luci-theme-darkmatter,luci-theme-infinityfreedom,luci-theme-design,luci-app-design-config, \
@@ -1691,9 +1691,9 @@ fi
 if [[ ! "${weizhicpu}" == "1" ]] && [[ "${AdGuardHome_Core}" == "1" ]]; then
   echo "正在执行：给adguardhome下载核心"
   rm -rf ${HOME_PATH}/AdGuardHome && rm -rf ${HOME_PATH}/files/usr/bin
-  wget -q https://github.com/cdny/common/releases/download/API/AdGuardHome.api -O AdGuardHome.api
+  wget -q https://github.com/cdny123/common/releases/download/API/AdGuardHome.api -O AdGuardHome.api
   if [[ $? -ne 0 ]];then
-    curl -fsSL https://github.com/cdny/common/releases/download/API/AdGuardHome.api -o AdGuardHome.api
+    curl -fsSL https://github.com/cdny123/common/releases/download/API/AdGuardHome.api -o AdGuardHome.api
   fi
   latest_ver="$(grep -E 'tag_name' 'AdGuardHome.api' |grep -E 'v[0-9.]+' -o 2>/dev/null)"
   rm -rf AdGuardHome.api
