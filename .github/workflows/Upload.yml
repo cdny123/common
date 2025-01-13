@@ -36,6 +36,12 @@ jobs:
       if: env.REPO_TOKEN
       run: |
         cd $GITHUB_WORKSPACE
+        
+        # 如果目标目录存在，则删除
+        if [ -d "$GITHUB_WORKSPACE/repogx" ]; then
+          rm -rf $GITHUB_WORKSPACE/repogx
+        fi
+        
         git clone https://github.com/${{github.repository}}.git $GITHUB_WORKSPACE/repogx
         
         git clone --depth 1 https://github.com/openwrt/packages -b openwrt-21.02 $GITHUB_WORKSPACE/packr-version
@@ -48,12 +54,6 @@ jobs:
           cp -Rf $GITHUB_WORKSPACE/packr-version/lang/ruby $GITHUB_WORKSPACE/repogx/Share/ruby
           rm -rf $GITHUB_WORKSPACE/repogx/Share/ttyd
           cp -Rf $GITHUB_WORKSPACE/packr-version/utils/ttyd $GITHUB_WORKSPACE/repogx/Share/ttyd
-        fi
-
-        git clone --depth 1 https://github.com/openwrt/luci -b openwrt-21.02 $GITHUB_WORKSPACE/ttyd-version
-        if [[ -d "$GITHUB_WORKSPACE/ttyd-version/applications/luci-app-ttyd" ]]; then
-          rm -rf $GITHUB_WORKSPACE/repogx/Share/luci-app-ttyd
-          cp -Rf $GITHUB_WORKSPACE/ttyd-version/applications/luci-app-ttyd $GITHUB_WORKSPACE/repogx/Share/luci-app-ttyd
         fi
         
         git clone --depth 1 https://github.com/openwrt/packages -b master $GITHUB_WORKSPACE/golang-version
