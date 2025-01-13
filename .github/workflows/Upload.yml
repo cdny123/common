@@ -1,9 +1,7 @@
-
 name: Upload
 on:
   repository_dispatch:
   workflow_dispatch:
-  
   schedule:
    - cron: 40 3 * * 6
 
@@ -13,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: Ubuntu-22.04
+    runs-on: ubuntu-22.04
     name: Upload
     
     steps:
@@ -29,7 +27,11 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
-          
+
+    - name: Create missing directories
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/repogx/Share
+
     - name: Organize data
       if: env.REPO_TOKEN
       run: |
@@ -104,18 +106,18 @@ jobs:
         echo "" >$GITHUB_WORKSPACE/cdny
         
         cd $GITHUB_WORKSPACE/Lede
-        git branch -r |sed '/HEAD/d' |sed 's/openwrt-//g' |sed 's/master/18.06/g' |sed 's/$/-Lede\"/' |sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
+        git branch -r | sed '/HEAD/d' | sed 's/openwrt-//g' | sed 's/master/18.06/g' | sed 's/$/-Lede\"/' | sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
         cd $GITHUB_WORKSPACE/Lienol
-        git branch -r |sed '/HEAD/d' |sed 's/openwrt-//g' |sed 's/$/-Lienol\"/' |sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
+        git branch -r | sed '/HEAD/d' | sed 's/openwrt-//g' | sed 's/$/-Lienol\"/' | sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
         cd $GITHUB_WORKSPACE/Immortalwrt
-        git branch -r |sed '/HEAD/d' |sed 's/openwrt-//g' |sed 's/$/-Immortalwrt\"/' |sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
+        git branch -r | sed '/HEAD/d' | sed 's/openwrt-//g' | sed 's/$/-Immortalwrt\"/' | sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
         echo '="mt798x-Immortalwrt"' >>$GITHUB_WORKSPACE/cdny
         cd $GITHUB_WORKSPACE/Official
-        git branch -r |sed '/HEAD/d' |sed 's/openwrt-//g' |sed 's/$/-Official\"/' |sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
+        git branch -r | sed '/HEAD/d' | sed 's/openwrt-//g' | sed 's/$/-Official\"/' | sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
         cd $GITHUB_WORKSPACE/Xwrt
-        git branch -r |sed '/HEAD/d' |sed 's/openwrt-//g' |sed 's/$/-Xwrt\"/' |sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
+        git branch -r | sed '/HEAD/d' | sed 's/openwrt-//g' | sed 's/$/-Xwrt\"/' | sed 's/origin\//=\"/g' >>$GITHUB_WORKSPACE/cdny
         cd $GITHUB_WORKSPACE
-        cat $GITHUB_WORKSPACE/cdny |sed '/^$/d' |awk '$0=NR$0' |sed 's/^/R/' |sed s/[[:space:]]//g >$GITHUB_WORKSPACE/repogx/autoupdate/replace
+        cat $GITHUB_WORKSPACE/cdny | sed '/^$/d' | awk '$0=NR$0' | sed 's/^/R/' | sed s/[[:space:]]//g >$GITHUB_WORKSPACE/repogx/autoupdate/replace
         
     - name: Upload
       continue-on-error: true
