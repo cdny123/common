@@ -319,7 +319,7 @@ mv -f uniq.conf feeds.conf.default
 
 # 这里增加了源,要对应的删除/etc/opkg/distfeeds.conf插件源
 cat >>"feeds.conf.default" <<-EOF
-src-git danshui1 https://github.com/cdny123/openwrt-package.git;${SOURCE:="main"}
+src-git cdny123package https://github.com/cdny123/openwrt-package.git;main
 src-git helloworld https://github.com/fw876/helloworld.git
 src-git passwall3 https://github.com/xiaorouji/openwrt-passwall-packages;main
 EOF
